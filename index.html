@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+
+<!-- Creates -->
+<a-scene background="color: #ECECEC">
+    <!-- Create an empty video tag to hold our webcam stream -->
+<a-assets>
+        <video id="webcam" playsinline crossorigin="anonymous"></video>
+        <texturevideo id="fractal" autoplay loop="true" src="fractal.mp4" crossorigin="anonymous"></video>
+        <texturevideo id="clock" autoplay loop="true" src="clock.mp4" crossorigin="anonymous"></video>
+</a-assets>
+<a-box src = "#fractal" position="0  12.5 12" rotation="0 0 0"  width ="25" height = "25"></a-box>
+      <a-box src = "#fractal" position="12  12.5 0" rotation="0 90 0"  width ="25" height = "25"></a-box>
+      <a-box src = "#fractal" position="-12  12.5 0" rotation="0 90 0"  width ="25" height = "25"></a-box>
+      <a-box src = "#fractal" position="0  25 0" rotation="90 0 0"  width ="25" height = "25"></a-box>
+      <a-box src = "#fractal" position="0  12.5 -12" rotation="0 0 0"  width ="25" height = "25"></a-box>
+      <!-- video screen -->
+      <a-box src= "#webcam"  position="11  8 0" rotation="0 90 0"  width ="15" height = "10"></a-box>
+      <!-- floor -->
+      <a-plane src="#clock" position="0 0 0" rotation="-90 0 0" width="25" height="25" ></a-plane>
+
+</a-scene>
+
+<!-- Start the webcam stream and attach it to the video element -->
+<script>
+  // You can also set which camera to use (front/back/etc)
+  // @SEE https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+  navigator.mediaDevices.getUserMedia({audio: false, video: true})
+  .then(stream => {
+    let $video = document.querySelector('video')
+    $video.srcObject = stream
+    $video.onloadedmetadata = () => {
+      $video.play()
+    }
+  })
+</script>
+</html>
